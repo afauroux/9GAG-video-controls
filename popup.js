@@ -4,10 +4,15 @@ document.getElementById('btn-restart').addEventListener('click', function(){
 document.getElementById('link9gag').addEventListener('click', function(){
     goTo9gag();
 })
-
+let digit2 = function(num){
+    return (num/100).toFixed(2).split('.')[1]
+}
 let updateTimeDisplay = function(time){
     let counter=document.querySelector('#timecounter')
-    if(typeof counter !== 'undefined') counter.textContent = time
+    let hours = Math.floor(time / (60 * 60));
+    let minutes = Math.floor((time % ( 60 * 60)) / 60);
+    let seconds = Math.floor((time % 60) );
+    if(typeof counter !== 'undefined') counter.textContent = digit2(hours)+':'+digit2(minutes)+':'+digit2(seconds)
 }
 let checkTimerState=function(){
     chrome.storage.sync.get(['time'],(result)=>{
@@ -32,6 +37,7 @@ let goTo9gag = function(){
       }
     })
 }
+checkTimerState()
 setInterval(checkTimerState, 1000);
 
     

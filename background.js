@@ -11,7 +11,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
   });
 });
 
-chrome.tabs.onActivated.addListener(function(){
+chrome.tabs.onUpdated.addListener(function(){
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     var activeTab = tabs[0];
     if(activeTab.url.includes('9gag')){
@@ -24,18 +24,14 @@ chrome.tabs.onActivated.addListener(function(){
 let timer
 let startBackTimer = function(){
   if(typeof timer !== 'undefined')return
-  //alert('start timer')
   timer = setInterval(()=>{
     chrome.storage.sync.get(['time'], function(result) {
       let time=0
       if(typeof result.time !== 'undefined'){
           time=result.time
       } 
-      console.log('time is ' + time);
       time++
-      chrome.storage.sync.set({'time': time}, function() {
-        console.log('time is set to ' + time);
-      })
+      chrome.storage.sync.set({'time': time}, function() {})
     })
   }, 1000)
 }
